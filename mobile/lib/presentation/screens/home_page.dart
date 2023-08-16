@@ -264,8 +264,8 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // ListSlider()
+// List view for the Tasks
+                ListSlider()
               ],
             ),
           ),
