@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_assessment/presentation/screens/addtodo.dart';
+import 'package:mobile_assessment/presentation/screens/updatetodo.dart';
 
 import '../../data/data_provider/todo_data_provider.dart';
 import '../../domain/entities/todo_entity.dart';
@@ -44,9 +45,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(context, MaterialPageRoute(
                             builder: (context) =>
                                 AddTodo()
-                        ),
-                          // (Route<dynamic> route) => false,
-                        );
+                        ),);
                       },
                       child: Text('New Task'))
                 ],

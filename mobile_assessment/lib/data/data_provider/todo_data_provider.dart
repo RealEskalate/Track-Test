@@ -10,7 +10,7 @@ class TodoDataProvider implements TodoRepository{
   Future<bool> addTodo(String title, String description) async {
     var url = Uri.parse(endPoint);
     var body = {
-      'title': title,
+      'name': title,
       'description': description
     };
 
@@ -25,9 +25,13 @@ class TodoDataProvider implements TodoRepository{
   }
 
   @override
-  Future<bool> deleteTodo() {
-    // TODO: implement deleteTodo
-    throw UnimplementedError();
+  Future<bool> deleteTodo(String id) async {
+    var url = Uri.parse(endPoint+'/${id}');
+    var response = await http.delete(url);
+    if (response.statusCode == 200){
+      return true;
+    }
+    return false;
   }
 
   @override
@@ -39,7 +43,7 @@ class TodoDataProvider implements TodoRepository{
       List<TodoEntity> todos = [];
       Iterable resBody = jsonDecode(response.body);
       for (var todo in resBody){
-        TodoEntity t = TodoEntity(title: todo['name'], description: todo['description'], status: todo['status']);
+        TodoEntity t = TodoEntity(id: todo['id'],title: todo['name'], description: todo['description'], status: todo['status']);
         todos.add(t);
       }
       return todos;
@@ -49,9 +53,21 @@ class TodoDataProvider implements TodoRepository{
 
 
   @override
-  Future<bool> updateTodo() {
-    // TODO: implement updateTodo
-    throw UnimplementedError();
+  Future<bool> updateTodo(String title, String description, String id) async{
+    var url = Uri.parse(endPoint+'/${id}');
+    var body = {
+      'name': title,
+      'description': description
+    };
+
+    var response = await http.post(url, headers: {
+      'Content-Type': 'application/json'
+    }, body: body);
+
+    if (response.statusCode == 200){
+      return true;
+    }
+    return false;
   }
 
 }

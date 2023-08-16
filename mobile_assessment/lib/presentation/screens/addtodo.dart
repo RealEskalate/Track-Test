@@ -9,6 +9,7 @@ class AddTodo extends StatefulWidget {
 }
 
 class _AddTodoState extends State<AddTodo> {
+  String createBtn = 'Create';
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   @override
@@ -52,11 +53,21 @@ class _AddTodoState extends State<AddTodo> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(onPressed: ()async {
-                if (await TodoDataProvider.addTodo(titleController.text, descriptionController.text )){
-
+                setState(() {
+                  createBtn = '...Creating';
+                });
+                if (await TodoDataProvider().addTodo(titleController.text, descriptionController.text )){
+                    setState(() {
+                      createBtn = 'Done';
+                    });
+                }
+                else{
+                  setState(() {
+                    createBtn = 'Retry';
+                  });
                 }
               },
-              child: Text('Create')),
+              child: Text(createBtn)),
               ElevatedButton(onPressed: (){
                 Navigator.of(context).pop();
               },
