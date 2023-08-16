@@ -1,0 +1,19 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .page-button {
+    font-weight: 600;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+  }
+  
+  .page-button.active {
+    background-color: #007BFF !important;
+    color: white !important;
+  }
+  

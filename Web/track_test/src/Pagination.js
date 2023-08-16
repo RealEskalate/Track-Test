@@ -1,19 +1,27 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button, ButtonGroup } from '@mui/material';
+import './pagination.css';
+
 const Pagination = ({ currentPage, totalPages }) => {
-    const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
-  
-    return (
-      <div>
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  return (
+    <div className="pagination-container">
+      <ButtonGroup color="primary">
         {pageNumbers.map(pageNumber => (
-          <a
+          <Button
             key={pageNumber}
-            href={`?page=${pageNumber}`}
-            style={{ margin: '0.2rem' }}
+            component={Link}
+            to={`?page=${pageNumber}`}
+            className={`page-button${currentPage === pageNumber ? ' active' : ''}`}
           >
             {pageNumber}
-          </a>
+          </Button>
         ))}
-      </div>
-    );
-  }
-  
-  export default Pagination;
+      </ButtonGroup>
+    </div>
+  );
+}
+
+export default Pagination;

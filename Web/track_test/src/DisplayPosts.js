@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Typography, TextField, Container } from '@mui/material';
 import Pagination from './Pagination';
 import fetchData from './FetchData';
+import './styles.css';
+
 
 const DisplayPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -46,18 +49,24 @@ const DisplayPosts = () => {
   const displayedPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
 
   return (
-    <div>
-      <h1>Posts</h1>
-      <input
-        type="text"
-        placeholder="Search posts..."
+    <Container className="container">
+      <Typography variant="h4" className="heading">
+        Posts
+      </Typography>
+      <TextField
+        variant="outlined"
+        placeholder="Discover inspiration..."
         value={searchKeyword}
         onChange={e => setSearchKeyword(e.target.value)}
+        className="input"
+        InputProps={{ style: { color: '#2E3C44' } }}
       />
       {displayedPosts.map(post => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.body}</p>
+        <div key={post.id} className="postContainer">
+          <Typography variant="h6" className="postTitle">
+            {post.title}
+          </Typography>
+          <Typography>{post.body}</Typography>
         </div>
       ))}
 
@@ -65,7 +74,7 @@ const DisplayPosts = () => {
         currentPage={currentPage}
         totalPages={Math.ceil(filteredPosts.length / postsPerPage)}
       />
-    </div>
+    </Container>
   );
 }
 
