@@ -12,27 +12,30 @@ Build a web application that interacts with the JSON API provided at the endpoin
 
 Endpoint: `https://jsonplaceholder.typicode.com/posts`
 Params:
-- `limit`: To set the number of posts shown.
-- `page`: The page you want to load.
+- `_limit`: To set the number of posts shown.
+- `_page`: The page you want to load.
 - `q`: Search a keyword.
 
 ### Requirements
 
-1. Using **React**, build a web application that queries the provided endpoint.
-2. Implement a paginated display of posts, with the pagination reflected in the URL (so when the page is refreshed, the same results are shown).
-3. **Implement a search functionality** that enables users to search for posts based on a keyword.
+1. Using **React or Next**, build a web application that queries the provided endpoint.
+2. Implement a paginated display of posts (10 per page), with the pagination reflected in the URL (so when the page is refreshed, the same results are shown).
+3. **Implement a search functionality** that enables users to search for posts based on a keyword. This should also be reflected on the URL.
 4. Use either **Redux** or **Redux Toolkit** for state management. Save the fetched results in the store and render them appropriately.
+5. Use a UI library (Ex. Material UI, TailwindCSS ...)
 
 ### Optional
 
-1. Implement **unit testing** for at least **one component** and **one test for the Redux reducer**.
+1. Implement **unit testing** for at least **one component**
+2. Implement **unit testing** on your **state management**.
 3. Add a loading state
 
 ### Submission
 
-1. Candidates should create a **pull request** from their repository to the main repository.
-2. The pull request should include a **detailed description** of the changes made and the features implemented.
-3. Candidates should also include a **screenshot** of the application within the pull request description.
+1. You should create a branch with **[yourname].track_test** on this repository.
+2. You should create a **pull request** from your branch to the main branch.
+3. The pull request should include a **detailed description** of the changes made and the features implemented.
+4. You should also include a **screenshot** of the application within the pull request description.
 
 
 ## Good luck!
