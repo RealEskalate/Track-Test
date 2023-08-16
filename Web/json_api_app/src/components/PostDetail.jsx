@@ -13,8 +13,8 @@ const PostDetail = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
-      <p>{post.body}</p>
+      <h2 className="text-2xl font-bold mb-4 border-2 shadow p-2">{post.title}</h2>
+      <p class = 'border-2 shadow p-2'>{post.body}</p>
     </div>
   );
 };

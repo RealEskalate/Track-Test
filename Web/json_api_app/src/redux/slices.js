@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async ({ _limit, _page, q }) => {
   const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
     params: { _limit, _page, q },
@@ -24,7 +25,7 @@ const postsSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.data = action.payload;
+        state.data = action.payload; // Update the data field with fetched posts
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = 'failed';
