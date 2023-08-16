@@ -1,0 +1,31 @@
+.container {
+background-color : white;
+height : 100vh;
+text-align : center;
+width : 100%;
+
+/* object-fit : contain; */
+/* background-size: cover; */
+
+}
+.App_header{
+  background-color : green;
+  width : 100%;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+/* Apply styles to individual cards */
+.card {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+
