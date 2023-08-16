@@ -12,6 +12,7 @@ Build a web application that interacts with the JSON API provided at the endpoin
 
 Endpoint: `https://jsonplaceholder.typicode.com/posts`
 Params:
+
 - `_limit`: To set the number of posts shown.
 - `_page`: The page you want to load.
 - `q`: Search a keyword.
@@ -37,6 +38,5 @@ Params:
 3. You should create a **pull request** from your branch to the main branch.
 4. The pull request should include a **detailed description** of the changes made and the features implemented.
 5. You should also include a **screenshot** of the application within the pull request description.
-
 
 ## Good luck!
