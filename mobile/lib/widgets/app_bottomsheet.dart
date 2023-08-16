@@ -140,11 +140,6 @@ final titleController=TextEditingController();
                           "description": new_task.description,
                           "createdAt": new_task.createdAt, 
                           "status": new_task.status };
-                         final response = await http.post(
-                               Uri.parse("https://64db1ca9593f57e435b0778b.mockapi.io/api/v1/tasks"),
-                                      body: json.encode(postData),
-                                   headers: {'Content-Type': 'application/json'},
-                                           );
                         newTask.taskEventSink.add(new_task);
                       },
                                    child: Text("Create")),

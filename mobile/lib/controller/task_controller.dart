@@ -32,7 +32,7 @@ final _eventController=StreamController<Task>();
     //     taskSink.add(tasks);
     //   }
     //  else
-      if(event.taskAction==TaskAction.ADD_TASK){
+    else  if(event.taskAction==TaskAction.ADD_TASK){
       // var tasks= await getTask();
     
         TaskModel tsk=new TaskModel(
@@ -43,6 +43,13 @@ final _eventController=StreamController<Task>();
           status: event.status);
         tasks.add(tsk);
         taskSink.add(tasks);
+        print("kkkkkkk");
+         final response = await http.post(
+                    Uri.parse("https://64db1ca9593f57e435b0778b.mockapi.io/api/v1/tasks"),
+                      body: json.encode(tsk.toJson()),
+                      headers: {'Content-Type': 'application/json'},
+                      );
+              print(response.statusCode);    
       }
       else if(event.taskAction==TaskAction.UPDATE_TASK){
         TaskModel tsk=new TaskModel(
@@ -58,7 +65,14 @@ final _eventController=StreamController<Task>();
         tasks.add(tsk);
         taskSink.add(tasks);
         print(tasks);
-
+   final apiUrl = 'https://64db1ca9593f57e435b0778b.mockapi.io/api/v1/tasks/${event.id}'; // Replace with your API endpoint
+      
+      final response = await http.put(
+        Uri.parse(apiUrl),
+        body: json.encode(tsk.toJson()),
+        headers: {'Content-Type': 'application/json'},
+      );
+      print(response.statusCode);
       }
     });
    }

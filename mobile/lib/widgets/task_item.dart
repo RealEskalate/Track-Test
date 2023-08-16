@@ -54,7 +54,7 @@ final newTask;
                   borderRadius: BorderRadius.circular(10),
                 ),
                   title: Text(name),
-                  subtitle: Text(description),
+                  subtitle: Text(description,overflow: TextOverflow.ellipsis,),
                   trailing: Transform.scale(
                     scale: 1.5,
                     child: Checkbox(

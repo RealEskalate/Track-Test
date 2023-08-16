@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage> {
-  final newTask=TaskBloc();
+  final newTaskBloc=TaskBloc();
   var taskInial=[];
   @override
   void initState(){
@@ -28,14 +28,13 @@ class _HomePageState extends State<HomePage> {
                           description: "descriptionController.text",
                           createdAt: "newDt", 
     );
-         newTask.taskEventSink.add(new_task);
+         newTaskBloc.taskEventSink.add(new_task);
 
   super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final newTask=TaskBloc();
     return Scaffold(
       appBar: AppBar(
           title: ListTile(
@@ -112,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (context)=>Padding(
                   padding: EdgeInsets.only(bottom:MediaQuery.of(context).viewInsets.bottom),
                   // padding: const EdgeInsets.all(8.0),
-                  child:  BottomSheetForm(newTask: newTask,),
+                  child:  BottomSheetForm(newTask: newTaskBloc,),
                 )), 
                child:const Text("+ new Task",style: 
                TextStyle(color: Colors.white)
@@ -123,10 +122,10 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: 800,
             child: StreamBuilder<List<TaskModel>>(
-              stream: newTask.taskStream,
+              stream: newTaskBloc.taskStream,
 
               builder: (context, snapshot) {
-                print(newTask.tasks);
+                print(newTaskBloc.tasks);
                 print(snapshot);
                 if (snapshot.hasData) {
                 print('jjjjjj${snapshot.data!.length}');
@@ -139,14 +138,14 @@ class _HomePageState extends State<HomePage> {
                       description:snapshot.data![idx].description,
                       createdAt:snapshot.data![idx].createdAt,
                       isDone:snapshot.data![idx].status,
-                      newTask: newTask, 
+                      newTask: newTaskBloc, 
                     );
                   });
               
                 }
                 else{
                   return Center(
-                    child: Text("No Task Added"),
+                    child: CircularProgressIndicator(),
                   );
                 }
               }
