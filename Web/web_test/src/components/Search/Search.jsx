@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postActions } from "../../store/postSlice";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from '@mui/icons-material/Search';
@@ -19,6 +19,7 @@ const SearchBar = (props) => {
       <TextField
         id="search-bar"
         className="text"
+        data-testid="search-input"
         onInput={(e) => {
        setSearchValue(e.target.value);
         }}

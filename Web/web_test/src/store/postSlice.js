@@ -5,7 +5,8 @@ const postSlice = createSlice({
   initialState: {
     posts: [],
     pageNumber: 1,
-    searchValue: ""
+    searchValue: "",
+    loading: true
   },
   reducers: {
     replacePosts(state, action) {
@@ -16,6 +17,12 @@ const postSlice = createSlice({
     },
     changeSearchValue(state, action){
       state.searchValue = action.payload.searchValue
+    },
+    turnOffLoading(state){
+      state.loading = false;
+    },
+    turnOnLoading(state){
+      state.loading = true;
     }
   },
 });
