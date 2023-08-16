@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile/components/app_color.dart';
@@ -13,6 +15,8 @@ class BottomSheetForm extends StatelessWidget {
 final  newTask;
 final descriptionController=TextEditingController();
 final titleController=TextEditingController();
+
+  get http => null;
 
   @override
   Widget build(BuildContext context) {
@@ -117,18 +121,30 @@ final titleController=TextEditingController();
 
                       backgroundColor: MaterialStatePropertyAll(AppColor.primary)
                     ),
-                      onPressed: (){
+                      onPressed: () async {
                         DateTime date= new DateTime.now();
                         int _id =  date.millisecondsSinceEpoch;
                         var newDt = DateFormat.yMMM().format(date);
                         final new_task=Task(
-                          id: "_id", 
+                          id: 'andom${newDt}', 
                           taskAction: TaskAction.ADD_TASK,
                           title: titleController.text,
                           description: descriptionController.text,
                           createdAt: newDt, 
                           status: false);
-    
+
+
+                          var postData={
+                            "id":new_task.id,
+                          "title": new_task.title,
+                          "description": new_task.description,
+                          "createdAt": new_task.createdAt, 
+                          "status": new_task.status };
+                         final response = await http.post(
+                               Uri.parse("https://64db1ca9593f57e435b0778b.mockapi.io/api/v1/tasks"),
+                                      body: json.encode(postData),
+                                   headers: {'Content-Type': 'application/json'},
+                                           );
                         newTask.taskEventSink.add(new_task);
                       },
                                    child: Text("Create")),
