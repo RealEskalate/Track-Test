@@ -32,10 +32,11 @@ Params:
 
 ### Submission
 
-1. You should create a branch with **[yourname].track_test** on this repository.
-2. You should create a **pull request** from your branch to the main branch.
-3. The pull request should include a **detailed description** of the changes made and the features implemented.
-4. You should also include a **screenshot** of the application within the pull request description.
+1. Add your code in the web folder.
+2. You should create a branch with **[yourname].track_test** on this repository.
+3. You should create a **pull request** from your branch to the main branch.
+4. The pull request should include a **detailed description** of the changes made and the features implemented.
+5. You should also include a **screenshot** of the application within the pull request description.
 
 
 ## Good luck!
