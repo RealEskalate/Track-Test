@@ -11,17 +11,17 @@ class TaskItem extends StatelessWidget {
     this.id,
     this.createdAt,
     this.description,
-    this.status,
-    this.title,
+    this.isDone,
+    this.name,
     this.newTask
 
 
   });
 final id;
-final title;
+final name;
 final description;
 final createdAt;
-final status;
+final isDone;
 final newTask;
 
   @override
@@ -53,24 +53,24 @@ final newTask;
                   shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                  title: Text(title),
+                  title: Text(name),
                   subtitle: Text(description),
                   trailing: Transform.scale(
                     scale: 1.5,
                     child: Checkbox(
                       fillColor: MaterialStatePropertyAll(AppColor.primary),
                       shape:CircleBorder(),
-                      value: status, 
+                      value: isDone, 
                     onChanged:(val){
                         DateTime date= new DateTime.now();
                         var newDt = DateFormat.yMMM().format(date);
                         final new_task=Task(
                           id: id, 
                           taskAction: TaskAction.UPDATE_TASK,
-                          title: title,
+                          title: name,
                           description: description,
                           createdAt: newDt, 
-                          status: !status);
+                          status: !isDone);
                         newTask.taskEventSink.add(new_task);
                       },),
                   ),      

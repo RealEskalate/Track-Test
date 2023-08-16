@@ -45,16 +45,19 @@ final _eventController=StreamController<Task>();
         taskSink.add(tasks);
       }
       else if(event.taskAction==TaskAction.UPDATE_TASK){
-        // TaskModel tsk=new TaskModel(id:event.id,dateTime: event.dateTime,title:event.title,description: event.description,isDone: event.isDone);
-        // for (var i = 0; i < tasks.length; i++) {
-        //   if (tasks[i].id==event.id) {
-        //     
-        //     break;
-        //   }
-        // }
-        // tasks.add(tsk);
-        // taskSink.add(tasks);
-        // print(tasks);
+        TaskModel tsk=new TaskModel(
+          id:event.id,createdAt: 
+          event.createdAt,title:event.title,
+          description: event.description,status: event.status);
+        for (var i = 0; i < tasks.length; i++) {
+          if (tasks[i].id==event.id) {
+            tasks.removeAt(i);
+            break;
+          }
+        }
+        tasks.add(tsk);
+        taskSink.add(tasks);
+        print(tasks);
 
       }
     });

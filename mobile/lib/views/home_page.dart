@@ -135,10 +135,10 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (cnx,idx){
                     return TaskItem(
                       id:snapshot.data![idx].id,
-                      title:snapshot.data![idx].title,
+                      name:snapshot.data![idx].title,
                       description:snapshot.data![idx].description,
                       createdAt:snapshot.data![idx].createdAt,
-                      status:snapshot.data![idx].status,
+                      isDone:snapshot.data![idx].status,
                       newTask: newTask, 
                     );
                   });
