@@ -1,46 +1,23 @@
 // import { getPosts } from "./postAPI";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { search, selectPosts } from "./postSlice";
+import { search, selectPosts, selectStatus } from "./postSlice";
 
 export default function Table() {
   const posts = useSelector(selectPosts);
+  const status = useSelector(selectStatus);
   const dispatch = useDispatch();
 
-  console.log(posts);
   const totalPages = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  dispatch(search(currentPage));
-
-  const advertisements = [
-    {
-      id: "daf",
-      title: "dfsd",
-      body: "dfsd",
-      created_at: "dfsd",
-    },
-    {
-      id: "daf",
-      title: "dfsd",
-      body: "dfsd",
-      created_at: "dfsd",
-    },
-    {
-      id: "daf",
-      title: "dfsd",
-      body: "dfsd",
-      created_at: "dfsd",
-    },
-  ];
-
-  const isLoading = false;
-
-  const handlePageChange = (pageNumber) => {
+  function handlePageChange(pageNumber) {
     setCurrentPage(pageNumber);
-  };
+    dispatch(search(pageNumber));
+    console.log(pageNumber);
+  }
 
-  if (posts.status != "loading") {
+  if (status == "loading") {
     return (
       <div class="flex justify-center items-center h-screen">
         <div role="status">
@@ -76,17 +53,16 @@ export default function Table() {
                 <th class="px-4 py-3">Id</th>
                 <th class="px-4 py-3">Title</th>
                 <th class="px-4 py-3">Body</th>
-                <th class="px-4 py-3">Date</th>
               </tr>
             </thead>
             <tbody class="bg-white divide-y dark:divide-gray-300 dark:bg-gray-100">
-              {posts.posts.map((advertisement) => (
+              {posts.map((post) => (
                 <tr class="bg-gray-50 dark:bg-gray-100 hover:bg-gray-100 dark:hover:bg-gray-400 text-gray-700 dark:text-black">
                   <td class="px-4 py-3">
                     <div class="flex items-center text-sm">
-                      <p class="font-semibold">{advertisement.id}</p>
+                      <p class="font-semibold">{post.id}</p>
                       <p class="text-xs text-gray-600 dark:text-black">
-                        {advertisement.userId}
+                        {post.userId}
                       </p>
                     </div>
                   </td>
@@ -94,17 +70,11 @@ export default function Table() {
                     {" "}
                     <div>
                       <p className="inline-flex rounded-full bg-yellow-500 bg-opacity-10 py-1 px-3 text-sm font-medium text-yellow-500">
-                        {advertisement.title}
+                        {post.title}
                       </p>
                     </div>
                   </td>
-                  <td class="px-4 py-3 text-sm">{advertisement.body}</td>
-                  <td class="px-4 py-3 text-sm">
-                    {/* {advertisement.created_at} */}
-                    {/* {new Date(advertisement.created_at).toLocaleDateString(
-                      "en-US"
-                    )} */}
-                  </td>
+                  <td class="px-4 py-3 text-sm">{post.body}</td>
                 </tr>
               ))}
             </tbody>
@@ -113,8 +83,7 @@ export default function Table() {
         <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-300 bg-gray-50 sm:grid-cols-9 dark:text-black dark:bg-gray-100">
           <span class="flex items-center col-span-3">
             {" "}
-            Showing {(currentPage - 1) * 6 + 1} - {currentPage * 6} of{" "}
-            {advertisements.count}{" "}
+            Showing {(currentPage - 1) * 10 + 1} - {currentPage * 10}
           </span>
           <span class="col-span-2"></span>
           <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">

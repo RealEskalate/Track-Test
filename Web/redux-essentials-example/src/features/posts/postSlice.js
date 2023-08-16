@@ -2,36 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getposts } from "./PostAPI";
 
 const initialState = {
-  posts: [
-    {
-      id: "adaf",
-      title: "dfsd",
-      body: "dfsd",
-      created_at: "dfsd",
-    },
-    {
-      id: "daf",
-      title: "dfsnd",
-      body: "dfsd",
-      created_at: "dfsd",
-    },
-    {
-      id: "daf",
-      title: "dfsd",
-      body: "dfsd",
-      created_at: "dfsd",
-    },
-  ],
+  value: [],
   status: "idle",
 };
 
-export const search = createAsyncThunk(
-  "counter/fetchPost",
-  async (page, limit, q) => {
-    const response = await getposts(page, limit, q);
-    return response.data;
-  }
-);
+export const search = createAsyncThunk("counter/fetchPost", async (page, q) => {
+  const response = await getposts(page, q);
+  return response.data;
+});
 
 export const postSlice = createSlice({
   name: "postGetter",
@@ -48,6 +26,7 @@ export const postSlice = createSlice({
   },
 });
 
-export const selectPosts = (state) => state.post;
+export const selectPosts = (state) => state.post.value;
+export const selectStatus = (state) => state.post.status;
 
 export default postSlice.reducer;

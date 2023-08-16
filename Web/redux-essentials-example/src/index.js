@@ -1,12 +1,14 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "./index.css";
+import { search } from "./features/posts/postSlice";
 
-const container = document.getElementById('root');
+store.dispatch(search(1));
+const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(

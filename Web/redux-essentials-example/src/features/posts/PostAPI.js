@@ -4,7 +4,7 @@ const axiosInstance = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com",
 });
 
-export const getposts = ({ page = 1 }, { q = "" }) => {
+export const getposts = (page) => {
   return axiosInstance
     .get(`/posts/?_page=${page}&_limit=10`)
     .then((res) => {
