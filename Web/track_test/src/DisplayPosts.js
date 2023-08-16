@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Pagination from './Pagination';
+import fetchData from './FetchData';
 
 const DisplayPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -13,21 +15,14 @@ const DisplayPosts = () => {
   const currentPage = parseInt(queryParams.get('page')) || 1;
   const postsPerPage = 10;
 
-  const getPostsData = async () => {
-    try {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts');
-      if (!response.ok) {
-        throw new Error('Error in network response');
-      }
-      const jsonData = await response.json();
-      setPosts(jsonData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }
-
   useEffect(() => {
-    getPostsData();
+    fetchData()
+      .then(jsonData => {
+        setPosts(jsonData);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   }, []);
 
   useEffect(() => {
@@ -40,10 +35,12 @@ const DisplayPosts = () => {
   }, [searchKeyword, posts]);
 
   useEffect(() => {
-    // Update URL when pagination changes
-    queryParams.set('page', currentPage);
-    navigate(`?${queryParams.toString()}`);
-  }, [currentPage, navigate, queryParams]);
+    // Update URL with searchKeyword
+    const newSearchParams = new URLSearchParams(queryParams);
+    newSearchParams.set('page', currentPage);
+    newSearchParams.set('search', searchKeyword);
+    navigate(`?${newSearchParams.toString()}`, { replace: true });
+  }, [currentPage, navigate, searchKeyword]);
 
   const startIndex = (currentPage - 1) * postsPerPage;
   const displayedPosts = filteredPosts.slice(startIndex, startIndex + postsPerPage);
@@ -63,28 +60,11 @@ const DisplayPosts = () => {
           <p>{post.body}</p>
         </div>
       ))}
+
       <Pagination
         currentPage={currentPage}
         totalPages={Math.ceil(filteredPosts.length / postsPerPage)}
       />
-    </div>
-  );
-}
-
-const Pagination = ({ currentPage, totalPages }) => {
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
-
-  return (
-    <div>
-      {pageNumbers.map(pageNumber => (
-        <a
-          key={pageNumber}
-          href={`?page=${pageNumber}`}
-          style={{ margin: '0.2rem' }}
-        >
-          {pageNumber}
-        </a>
-      ))}
     </div>
   );
 }
