@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchPosts } from '../features/posts/PostsSlice';
 import SearchBar from './SearchBar';
 import Pagination from './Pagination';
+import store from '../app/store'
 
 function PostList() {
     const dispatch = useDispatch();
@@ -29,14 +30,18 @@ function PostList() {
 
   return (
     <div className="mt-6">
+      <Provider store={store}>
       <SearchBar/>
+      </Provider>
       {posts.map((post) => (
         <div key={post.id} className="bg-gray-200 rounded-md shadow-md p-4 mb-4 mx-auto max-w-3xl mt-5">
           <h2 className="text-xl font-semibold">{post.title}</h2>
           <p className="mt-2">{post.body}</p>
         </div>
       ))}
+      <Provider store={store}>
       <Pagination currentPage={currentPage} totalPages={totalPages} />
+      </Provider>     
     </div>
   );
 }
