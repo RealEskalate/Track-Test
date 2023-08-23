@@ -1,4 +1,4 @@
-// pages/index.tsx
+
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostsStart, fetchPostsSuccess } from '../store/postsSlice';
@@ -37,13 +37,12 @@ export default function Home() {
   };
 
   return (
-    <main className=''>
-      <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Posts</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-blue-700">Posts</h1>
       <input
         type="text"
         placeholder="Search"
-        className="border p-2 text-black mb-4"
+        className="border p-2 mb-4 text-black rounded-lg"
         value={searchQuery}
         onChange={(e) => handleSearch(e.target.value)}
       />
@@ -53,19 +52,24 @@ export default function Home() {
         <div>
           <ul>
             {posts.map((post) => (
-              <li key={post.id} className="mb-2">
-                <h2 className="text-lg font-semibold">{post.title}</h2>
-                <p>{post.body}</p>
+              <li key={post.id} className="mb-3 border-l-4 border-l-blue-500 rounded">
+                <div className='flex text-lg font-semibold gap-2 text-blue-500'>
+                  <h2>{post.id}</h2>
+                  <h2>{post.title}</h2>
+                </div>
+                
+                <p className='text-gray-500'>{post.body}</p>
+                {/* </div> */}
               </li>
             ))}
           </ul>
           <div className="mt-4">
-            {Array.from({ length: Math.ceil(posts.length ) }).map(
+            {Array.from({ length: Math.ceil(posts.length) }).map(
               (_, index) => (
                 <button
                   key={index}
-                  className={`mr-2 px-2 py-1 border ${
-                    currentPage === index + 1 ? 'bg-gray-300' : ''
+                  className={`mr-2 px-2 py-1 border rounded-lg ${
+                    currentPage === index + 1 ? 'bg-blue-700' : ''
                   }`}
                   onClick={() => handlePageChange(index + 1)}
                 >
@@ -77,6 +81,5 @@ export default function Home() {
         </div>
       )}
     </div>
-    </main>
   );
 }
