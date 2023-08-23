@@ -1,65 +1,82 @@
-
-import React, { useEffect } from 'react';
+// pages/index.tsx
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, selectPosts, selectLoading, selectError } from '../store/postsSlice';
-import Pagination from '../components/Pagination';
-import SearchBar from '../components/SearchBar';
-import { useRouter } from 'next/router';
+import { fetchPostsStart, fetchPostsSuccess } from '../store/postsSlice';
+import { RootState } from '../store/store';
+import axios from 'axios';
 
-const ITEMS_PER_PAGE = 10;
-
-const HomePage: React.FC = () => {
+export default function Home() {
   const dispatch = useDispatch();
-  const posts = useSelector(selectPosts);
-  const loading = useSelector(selectLoading);
-  const error = useSelector(selectError);
-  const router = useRouter();
+  const posts = useSelector((state: RootState) => state.posts.posts);
+  const loading = useSelector((state: RootState) => state.posts.loading);
 
-  const { _page, q } = router.query;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    dispatch(fetchPosts({ _limit: ITEMS_PER_PAGE, _page, q }));
-  }, [dispatch, _page, q]);
-
-  const handlePageChange = (page: number) => {
-    router.push({
-      pathname: '/',
-      query: { ...router.query, _page: page },
-    });
+  const fetchPosts = async (page: number, query: string) => {
+    dispatch(fetchPostsStart());
+    try {
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/posts?_page=${page}&q=${query}`
+      );
+      dispatch(fetchPostsSuccess(response.data));
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
   };
 
   const handleSearch = (query: string) => {
-    router.push({
-      pathname: '/',
-      query: { ...router.query, _page: 1, q: query },
-    });
+    setSearchQuery(query);
+    setCurrentPage(1);
+    fetchPosts(1, query);
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchPosts(page, searchQuery);
+  };
 
   return (
-    <div>
+    <main className=''>
+      <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Posts</h1>
-      <SearchBar onSearch={handleSearch} />
-      {posts.map((post) => (
-        <div key={post.id} className="mb-4 p-4 border rounded">
-          <h2 className="text-lg font-semibold">{post.title}</h2>
-          <p>{post.body}</p>
-        </div>
-      ))}
-      <Pagination
-        currentPage={parseInt(_page as string, 10) || 1}
-        totalPages={10} 
-        onPageChange={handlePageChange}
+      <input
+        type="text"
+        placeholder="Search"
+        className="border p-2 text-black mb-4"
+        value={searchQuery}
+        onChange={(e) => handleSearch(e.target.value)}
       />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <ul>
+            {posts.map((post) => (
+              <li key={post.id} className="mb-2">
+                <h2 className="text-lg font-semibold">{post.title}</h2>
+                <p>{post.body}</p>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-4">
+            {Array.from({ length: Math.ceil(posts.length ) }).map(
+              (_, index) => (
+                <button
+                  key={index}
+                  className={`mr-2 px-2 py-1 border ${
+                    currentPage === index + 1 ? 'bg-gray-300' : ''
+                  }`}
+                  onClick={() => handlePageChange(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
+    </main>
   );
-};
-
-export default HomePage;
+}

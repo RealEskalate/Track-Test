@@ -1,7 +1,6 @@
-// import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { AppThunk, RootState } from './store'; // You'll need to define your store and types
+
 import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
-import {  RootState, AppDispatch } from './store'; // Make sure to adjust the path to your store file
+import {  RootState, AppDispatch } from './store'; 
 import { Action } from 'redux';
 interface Post {
   userId: number;
